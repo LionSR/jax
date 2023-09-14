@@ -353,7 +353,7 @@ def _gesvd_hlo(platform, gpu_solver, have_jacobi_solver, dtype, a,
   vector_layout = (num_bd,) + tuple(range(num_bd - 1, -1, -1))
   i32_type = ir.IntegerType.get_signless(32)
 
-  if have_jacobi_solver and m < 32 and n < 32:
+  if have_jacobi_solver and m < 512 and n < 512:
     # The batched kernel doesn't support "econ" mode.
     econ = not full_matrices and b == 1
     lwork, opaque = gpu_solver.build_gesvdj_descriptor(
